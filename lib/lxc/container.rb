@@ -19,7 +19,7 @@ module LXC
     # @return [Hash] hash with :state and :pid attributes
     def status
       output = run("info")
-      result = output.scan(/^state:\s+([\w]+)|pid:\s+(-?[\d]+)$/).flatten
+      result = output.scan(/^[Ss]tate:\s+([\w]+)|[Pp][Ii][Dd]:\s+(-?[\d]+)$/).flatten
 
       LXC::Status.new(result.first, result.last)
     end
@@ -209,7 +209,7 @@ module LXC
       exists?
     end
 
-    # Destroy the container 
+    # Destroy the container
     # @param [Boolean] force force destruction
     # @return [Boolean] true if container was destroyed
     #
@@ -226,7 +226,7 @@ module LXC
           stop
         else
           raise ContainerError, "Container is running. Stop it first or use force=true"
-        end  
+        end
       end
 
       run("destroy")

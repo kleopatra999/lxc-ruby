@@ -22,14 +22,14 @@ describe LXC do
     end
 
     it 'returns false on missing files' do
-      FileUtils.rm("/tmp/lxc/lxc-version")
+      FileUtils.rm("/tmp/lxc/lxc-info")
       expect(LXC.installed?).to be_false
     end
   end
 
   describe '.version' do
     it 'returns installed LXC version' do
-      stub_lxc('version') { fixture('lxc-version.txt') }
+      stub_lxc('info', '--version') { fixture('lxc-info.txt') }
       expect(LXC.version).to eq('0.7.5')
     end
   end
@@ -73,7 +73,7 @@ describe LXC do
   describe ".containers" do
     it "returns all available containers" do
       stub_lxc('ls') { "vm0\nvm1\nvm0" }
-    
+
       list = LXC.containers
       expect(list).to be_an Array
       expect(list.size).to eq(2)
@@ -104,19 +104,19 @@ describe LXC do
 
   describe '.sudo' do
     before { LXC.use_sudo = true }
-    let(:result) do 
+    let(:result) do
       klass = Struct.new(:out)
-      klass.new(fixture('lxc-version.txt'))
+      klass.new(fixture('lxc-info.txt'))
     end
 
     it 'executes command using sudo' do
       expect(LXC.use_sudo).to be_true
 
       POSIX::Spawn::Child.stub(:new).
-        with('sudo lxc-version').
+        with('sudo lxc-info --version').
         and_return(result)
 
-      expect(LXC.run('version')).to eq 'lxc version: 0.7.5'
+        expect(LXC.run('info', '--version')).to eq "lxc version: 0.7.5"
     end
   end
 

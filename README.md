@@ -11,8 +11,9 @@ Supported LXC versions:
 - 0.7.5
 - 0.8.0
 - 0.9.0
+- 1.0.0
 
-For testing purposes you can use [Vagrant](http://vagrantup.com/) with [VirtualBox](https://www.virtualbox.org/). 
+For testing purposes you can use [Vagrant](http://vagrantup.com/) with [VirtualBox](https://www.virtualbox.org/).
 Most of the functionality was tested on 64-bit Ubuntu 12.04.
 Additional boxes could be found [here](http://www.vagrantbox.es/).
 
@@ -101,8 +102,8 @@ c.cpu_shares # => 1024
 c.cpu_usage  # => 4312.08
 
 # Get running processes
-c.processes 
-# => 
+c.processes
+# =>
 #[{"pid"=>"27404",
 #   "user"=>"root",
 #   "cpu"=>"0.0",
@@ -118,13 +119,13 @@ c = LXC::Container.new('foo')
 c.create(path_to_lxc_config)
 ```
 
-This method invokes ```lxc-create -n NAME -f CONFIG``` command. It *DOES NOT* create 
+This method invokes ```lxc-create -n NAME -f CONFIG``` command. It *DOES NOT* create
 any rootfs images or configures anything.
 
 ### Running with sudo
 
 By default LXC does not allow to run its command under unprivileged user. There are
-two ways to make it work: 
+two ways to make it work:
 
 **Using sudo**
 
@@ -134,9 +135,9 @@ LXC.use_sudo = true
 
 **Using lxc-setcap**
 
-If you want to make container usable by non-root users, run lxc-setcap as root, 
-and some capabilities will be set so that normal users will be able to use the 
-container utils. This is not done by default, though, and you have to 
+If you want to make container usable by non-root users, run lxc-setcap as root,
+and some capabilities will be set so that normal users will be able to use the
+container utils. This is not done by default, though, and you have to
 explicitly allow it.
 
 ## Testing
