@@ -4,7 +4,7 @@ module LXC
 
     def initialize(state, pid)
       @state = state.to_s.downcase
-      @pid   = Integer(pid)
+      @pid   = pid.to_i
     end
 
     def == (instance)
